@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>What's Up</title>
+</head>
+<style>
+    body {
+        padding: 5%;
+    }
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 70%;
+    }
+    
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+    
+    tr:nth-child(odd) {
+        background-color: #dddddd;
+    }
+    .today {
+        width: 80%;
+    }
+    .future {
+        width: 50%;
+    }
+    .add {
+        width: 30%;
+    }
+</style>
+<body>
+<h1>Hello, {{ user.name }}! </h1>
+<a href='/logout'>Logout</a>
+    
+<h3>Here are your appointments for today, {{ date }}:</h3>
+<table class='today'>
+    <tr>
+        <th>Tasks</th>
+        <th>Time</th>
+        <th>Status</th>
+        <th>Action</th>
+    </tr>
+
+    {% for appointment in tasks %}
+    
+    <tr>
+        <td>{{ appointment.task }}</td>
+        <td>{{ appointment.time }}</td>
+        <td>{{ appointment.status }}</td>
+        <td><a href='{{ appointment.id }}'>Edit</a>  <a href='delete/{{ appointment.id }}'>Delete</a></td>
+
+    </tr>
+    {% endfor %}
+    
+    
+</table>
+
+
+<h3>You Other appointments:</h3>
+    <table class='future'>
+        <tr>
+            <th>Tasks </th>
+            <th>Date</th>
+            <th>Time</th>
+            
+        </tr>
+        {% for appointment in later_tasks %}
+        
+        <tr>
+            <td>{{ appointment.task }}</td>
+            <td>{{ appointment.date }}</td>
+            <td>{{ appointment.time }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <br>
+
+<h3>Add Appointment</h3>
+    <table class='add'>
+        <form action='add' method='POST'>
+        {% csrf_token %} 
+        <input type='hidden' name='status' value='Pending'>
+        
+        <tr> 
+            <th><label for='date'>Date:</label></th>
+            <th><input type="date" id='date' name='date'></th>
+        </tr>
+        <tr> 
+            <th><label for='time'>Time:</label></th>
+            <th><input type="time" id='time' name='time'></th>
+        </tr>
+        <tr> 
+            <th><label for='task'>Tasks:</label></th>
+            <th><input type="text" id='task' name='task'></th>
+        </tr>
+        <tr>
+            <th></th>
+            <th><input type='submit' value='Add'></th>
+        </tr>
+        </form>
+    </table>    
+
+
+
+</body>
+</html>

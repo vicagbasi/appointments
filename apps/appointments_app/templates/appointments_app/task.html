@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Update Appointment</title>
+</head>
+<style>
+    body {
+        margin: 10% 0% 0% 40%;
+    }
+    
+</style>
+<body>
+    <p><a href='/appointments/'>Dashboard</a> | <a href='/logout'>Logout</a></p>
+    <table>
+        <form action='/appointments/update' method='POST'>
+        {% csrf_token %}
+            <tr> 
+                <th><label for='task'>Tasks:</label></th>
+                <th><input type="text" id='task' name='task' value='{{ task.task }}'></th>
+            </tr>
+            <tr> 
+                <th><label for='status'>Status:</label></th>
+                <th><select name="status" id='status'>
+                        <option value="Pending">Pending</option>
+                        <option value="Done">Done</option>
+                        <option value="Missed">Missed</option>
+                      </select></th>
+
+            </tr>
+            <tr> 
+                <th><label for='date'>Date:</label></th>
+                <th><input type="date" id='date' name='date' value='{{ task.date }}'></th>
+            </tr>
+            <tr> 
+                <th><label for='time'>Time:</label></th>
+                <th><input type="time" id='time' name='time' value='{{ task.time }}'></th>
+            </tr>
+            <tr>
+                <th></th>
+                <th><input type='submit' value='Update'></th>
+            </tr>
+        </form>
+    </table>
+    <div class='msg'>
+        {% if messages %}
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+        {% endif %}
+    </div>
+
+    
+</body>
+</html>
