@@ -11,36 +11,43 @@ def dashboard(request):
     except KeyError:
         return redirect('/')
 
+    print("=================User ID: {}=================".format(request.session['user_id']))
+    current_user = request.session['user_id']
+    now = datetime.datetime.now().strftime('%Y-%m-%d')
+
     context = {
         'user': User.objects.get(id=request.session['user_id']),
         'date': datetime.datetime.now().strftime('%B %d, %Y'),
-        'tasks': Task.objects.filter(date = datetime.datetime.now().strftime('%Y-%m-%d')).order_by('time'),
-        'later_tasks': Task.objects.exclude(date = datetime.datetime.now().strftime('%Y-%m-%d')).order_by('time')
+        'today': User.objects.get(id=current_user).personal_tasks.filter(date=now).order_by('time'),
+        'later_tasks': User.objects.get(id=current_user).personal_tasks.exclude(date=now).order_by('date')
 
     }
     return render(request, 'appointments_app/dashboard.html', context)
 
 def task(request, task_id):
+    print(type(Task.objects.get(id=task_id).date))
+    print(type(Task.objects.get(id=task_id).time))
+    date = Task.objects.get(id=task_id).date
     context = {
-        'task': Task.objects.get(id=task_id)
+        'task': Task.objects.get(id=task_id),
+        'date': ''
     }
-    request.session['task_id'] = task_id
+    
     return render(request, 'appointments_app/task.html', context )
 
-def update(request):
+def update(request, task_id):
     user_id = request.session['user_id']
-    if 'task_id' in request.session:
-        task_id = request.session['task_id']
-    valid = Task.objects.validate_update(request.POST, user_id)
-    # if type(valid) == list:
-    #     print('='*30)
-    #     print(valid)
-    #     for err in valid:
-    #         messages.error(request, err)
-    #     return redirect('appointments:<task_id>')
+    
+    valid = Task.objects.validate_update(request.POST, user_id, task_id)
+    if type(valid) == list:
+        print('='*30)
+        print(valid)
+        for err in valid:
+            messages.error(request, err)
+        return redirect('appointments:task', task_id=task_id)
     # 30 minute left and can't get an incorrect update to validate correctly sadly.
-    # else:
-    return redirect('appointments:dashboard') ('/appointments/dashboard')
+    else:
+        return redirect('appointments:dashboard') 
         
 
 def add(request):

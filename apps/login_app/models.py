@@ -11,7 +11,6 @@ class UserManager(models.Manager):
         if len(post_data['name']) < 3:
             errors.append('Name must be longer 3 characters.')
             
-        
         # checks db for existing user with same username
         if len(User.objects.filter(username=post_data['username'])) > 0:
             errors.append("username already in use")
@@ -65,3 +64,6 @@ class User(models.Model):
     birthday = models.DateField()
     created_at = models.DateTimeField(auto_now_add=True)
     objects = UserManager()
+
+    def __repr__(self):
+        return "<USER object: {} {}>".format(self.name, self.username)

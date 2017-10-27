@@ -8,7 +8,7 @@ def index(request):
 def register(request):
     errors = User.objects.validate_register(request.POST)
     print(errors)
-    if errors == list:
+    if type(errors) == list:
         for error in errors:
             messages.error(request, error)
         return redirect('/')

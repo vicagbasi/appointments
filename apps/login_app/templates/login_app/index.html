@@ -4,9 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">    
     <title>Login and Registration</title>
+    
 </head>
-<style>
+{% comment %} <style>
     body {margin: 0 auto;}
     table {
         padding: 2%;
@@ -32,70 +34,72 @@
     }
     p { background-color: lightblue; text-align: center; size: 3em;}
     
-</style>
+</style> {% endcomment %}
+<style> p { background-color: lightblue; text-align: center; size: 3em;}</style>
 <body>
-    <div class='left container'>
-    <h1>Registration</h1>
-    <form action="/register" method='POST'>
-    {% csrf_token %}
-    <table>
-        <tr> 
-            <th><label for='name'>Name:</label></th>
-            <th><input type="text" id='name' name='name'></th>
-        </tr>
-        <tr> 
-            <th><label for='username'>Username:</label></th>
-            <th><input type="text" id='username' name='username'></th>
-        </tr>
-        <tr> 
-            <th><label for='password'>Password:</label></th>
-            <th><input type="text" id='password' name='password'></th>
-        </tr>
-        <tr> 
-            <th><label for='confirm_pw'>Confirm Password:</label></th>
-            <th><input type="text" id='confirm_pw' name='confirm_pw'></th>
-        </tr>
-        <tr> 
-            <th><label for='birthday'>Date of Birth:</label></th>
-            <th><input type="date" id='birthday' name='birthday'></th>
-        </tr>
-        
-        <tr>
-            <th></th>
-            <th><input type="submit" value='Register'></th>
-        </tr>
-        
+    <div class='container'>
+        <div class='row'>
+            <div class='col'>
+                <h1>Registration</h1>
+                <form action="/register" method='POST'>
+                {% csrf_token %}
+                    <table>
+                        <tr> 
+                            <th><label for='name'>Name:</label></th>
+                            <th><input type="text" id='name' name='name'></th>
+                        </tr>
+                        <tr> 
+                            <th><label for='username'>Username:</label></th>
+                            <th><input type="text" id='username' name='username'></th>
+                        </tr>
+                        <tr> 
+                            <th><label for='password'>Password:</label></th>
+                            <th><input type="text" id='password' name='password'></th>
+                        </tr>
+                        <tr> 
+                            <th><label for='confirm_pw'>Confirm Password:</label></th>
+                            <th><input type="text" id='confirm_pw' name='confirm_pw'></th>
+                        </tr>
+                        <tr> 
+                            <th><label for='birthday'>Date of Birth:</label></th>
+                            <th><input type="date" id='birthday' name='birthday'></th>
+                        </tr>
+                        
+                        <tr>
+                            <th></th>
+                            <th><input type="submit" value='Register'></th>
+                        </tr>
+                        
 
-    </table>
-   
-    </form>
-    </div>
-
-    <div class='right container'>
+                    </table>
+                
+                </form>
+            </div>
     
-    <h1>Login</h1>
-    <form action="/login" method='POST'>
-    {% csrf_token %}
-    <table> 
-        <tr> 
-            <th><label for='username'>Username:</label></th>
-            <th><input type="text" id='username' name='username'></th>
-        </tr>
-        <tr> 
-            <th><label for='password'>Password:</label></th>
-            <th><input type="text" id='password' name='password'></th>
-        </tr>
-        <tr> 
-            <th></th>
-            <th><input type="submit" value='Login'></th>
-        </tr>
-    </table>
-    
-   
-    </form>
-    </div>
 
-    <div class='msg'>
+            <div class='col'>
+                <h1>Login</h1>
+                <form action="/login" method='POST'>
+                {% csrf_token %}
+                <table> 
+                    <tr> 
+                        <th><label for='username'>Username:</label></th>
+                        <th><input type="text" id='username' name='username'></th>
+                    </tr>
+                    <tr> 
+                        <th><label for='password'>Password:</label></th>
+                        <th><input type="text" id='password' name='password'></th>
+                    </tr>
+                    <tr> 
+                        <th></th>
+                        <th><input type="submit" value='Login'></th>
+                    </tr>
+                </table>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class='container'>
         {% if messages %}
         {% for message in messages %}
             <p>{{ message }}</p>
